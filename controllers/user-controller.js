@@ -31,6 +31,6 @@ module.exports.create=function(req,res){
         }
     });
 }
-module.exports.createSesion=function(req,res){
-    //Todo
+module.exports.createSession=function(req,res){
+    return res.redirect('/');
 }
