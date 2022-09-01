@@ -1,1 +1,20 @@
 <h1>This is header from partials</h1>
+
+<h2>
+    This is header from partials
+    <ul>
+        <%if(locals.user) {%> 
+            <li><a href="/user/profile"><%=user.name %> </a></li>
+            <li>
+                <a href="/user/sign-out">sign-out</a>
+            </li>
+        <%}else{%> 
+            <li>
+                <a href="/user/sign-in">sign-in</a>
+            </li>
+            <li>
+                <a href="/user/sign-up">Sign-UP</a>
+            </li>
+        <%}%> 
+    </ul>
+</h2>
