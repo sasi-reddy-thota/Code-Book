@@ -6,5 +6,6 @@ const passport=require('passport');
 const commentController=require('../controllers/comment-controller');
 
 router.post('/create',commentController.create);
+router.get('/destroy/:id',passport.chechAuthentication,commentController.destroy);
 
 module.exports=router;

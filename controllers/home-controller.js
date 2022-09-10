@@ -1,6 +1,6 @@
 const { populate } = require('../models/comment');
 const Post=require('../models/post');
-
+const User=require('../models/user')
 module.exports.home=function(req,res){
     console.log(req.cookies);
     // Post.find({},function(err,posts){
@@ -19,9 +19,12 @@ module.exports.home=function(req,res){
         }
      })
     .exec(function(err,posts){
-        return res.render('home',{
-            title:"Jai Balayya",
-            posts:posts
+        User.find({},function(err,users){
+            return res.render('home',{
+                title:"Jai Balayya",
+                posts:posts,
+                all_users:users
+            });
         });
     })
 }

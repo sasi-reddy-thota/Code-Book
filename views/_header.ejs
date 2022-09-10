@@ -1,19 +1,18 @@
-<h1>This is header from partials</h1>
-
-<h2>
-    <ul>
+<header>
+    <ul id="header-style">
         <%if(locals.user) {%> 
-            <li><a href="/user/profile"><%=user.name %> </a></li>
+            <li><a href="/user/profile/<%=user.id%> "><%=user.name %> </a></li>
             <li>
-                <a href="/user/sign-out">sign-out</a>
+                    <a href="/user/sign-out">Sign-Out</a>
             </li>
         <%}else{%> 
             <li>
-                <a href="/user/sign-in">sign-in</a>
+                <a href="/user/sign-in">Sign-In</a>
             </li>
             <li>
-                <a href="/user/sign-up">Sign-UP</a>
+                <a href="/user/sign-up">Sign-Up</a>
             </li>
         <%}%> 
-    </ul>
-</h2>
+     </ul>
+</header>
+
