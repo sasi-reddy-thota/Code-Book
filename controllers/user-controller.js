@@ -1,4 +1,6 @@
 const User=require('../models/user');
+const fs=require('fs');
+const path=require('path');
 
 
 module.exports.profile=function(req,res){
@@ -10,13 +12,37 @@ module.exports.profile=function(req,res){
 
     })
 }
-module.exports.update=function(req,res){
+module.exports.update=async function(req,res){
+    // if(req.user.id=req.params.id){
+    //     User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
+    //         return res.redirect('back');
+    //     });
+    // }
+    // else{
+    //     return res.status('401').send('Unauthorized');
+    // }
     if(req.user.id=req.params.id){
-        User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
+        try {
+            let user=await User.findById(req.params.id);
+            User.uploadedAvatar(req,res,function(err){
+                if(err){console.log('****Multer Error: ',err)}
+                // console.log(req.file);
+                user.name=req.body.name;
+                user.email=req.body.email;
+                if(req.file){
+                    user.avatar=User.avatarPath+'/'+req.file.filename;
+                    console.log(user.avatar);
+                }
+                user.save();
+                return res.redirect('back');
+
+            });
+        } catch (error) {
+            req.flash('error',error);
             return res.redirect('back');
-        });
-    }
-    else{
+        }
+    }else{
+        req.flash('error','Unauthorized');
         return res.status('401').send('Unauthorized');
     }
 }
@@ -54,12 +80,14 @@ module.exports.create=function(req,res){
     });
 }
 module.exports.createSession=function(req,res){
+    req.flash('success','Logged In Successfully');
     return res.redirect('/');
 }
 
 module.exports.destroy=function(req,res){
     req.logout(function(err) {
         if (err) { return next(err); }
+        req.flash('success','You have Logged Out');
         res.redirect('/');
     });
 }
